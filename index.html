@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#080d17">
+<title>PRIYAL TRADING AI PRO</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+:root{--bg:#080d17;--panel:#111a29;--line:#253248;--text:#e8eef9;--muted:#8b9ab1;--green:#00d49a;--red:#ff5470;--blue:#5897ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px -apple-system,BlinkMacSystemFont,Arial,sans-serif}
+header{padding:19px 16px;background:#0d1523;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.brand{font-size:19px;font-weight:850;letter-spacing:.5px}
+.brand span{color:var(--green)}
+.sub{font-size:11px;color:var(--muted);margin-top:5px}
+.wrap{padding:14px;max-width:850px;margin:auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+label{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}
+input,select,button{font:inherit;border-radius:9px;border:1px solid var(--line);background:#0a1220;color:var(--text);padding:12px}
+input,select{width:100%;min-width:0}
+button{cursor:pointer;font-weight:700}
+button.primary{background:#087b66;border-color:#087b66;color:white}
+button.secondary{background:#1b2b43}
+button:active{opacity:.75}
+.search{display:grid;grid-template-columns:1fr auto;gap:8px}
+.price{font-size:30px;font-weight:850;letter-spacing:-1px;margin:8px 0}
+.green{color:var(--green)}.red{color:var(--red)}
+.muted{color:var(--muted)}
+.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#15372f;color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.metric{padding:11px;background:#0b1422;border-radius:10px;border:1px solid #1c2b40}
+.metric b{display:block;font-size:17px;margin-top:6px}
+.metric small{color:var(--muted)}
+h3{font-size:15px;margin:0 0 13px}
+#chart{height:310px;width:100%}
+.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
+.tabs button{white-space:nowrap;padding:9px 13px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.actions button{flex:1}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td,th{text-align:right;padding:10px 5px;border-bottom:1px solid var(--line)}
+td:first-child,th:first-child{text-align:left}
+.note{font-size:11px;line-height:1.6;color:var(--muted)}
+.status{font-size:11px;color:var(--muted);margin-top:9px}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:11px}
+@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}#chart{height:420px}.controls{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand">PRIYAL <span>TRADING AI</span> PRO</div>
+ <div class="sub">QUANT RESEARCH TERMINAL · VERSION 1.0</div>
+</header>
+
+<main class="wrap">
+ <section class="panel">
+  <div class="row">
+   <b>MARKET TERMINAL</b>
+   <span class="tag" id="connection">CONNECTING</span>
+  </div>
+  <div class="search" style="margin-top:13px">
+   <input id="symbol" value="BTCUSDT" placeholder="Search: BTCUSDT, ETHUSDT">
+   <button class="primary" id="load">SEARCH</button>
+  </div>
+  <div class="row" style="margin-top:15px">
+   <div>
+    <div class="muted" id="coinName">BITCOIN / USDT</div>
+    <div class="price" id="price">Loading...</div>
+    <div id="change" class="muted">Fetching market data</div>
+   </div>
+   <div style="text-align:right">
+    <div class="muted">LIVE MARKET</div>
+    <b class="green">● ONLINE</b>
+   </div>
+  </div>
+ </section>
+
+ <section class="grid" style="margin-bottom:13px">
+  <div class="metric"><small>24H HIGH</small><b id="high">--</b></div>
+  <div class="metric"><small>24H LOW</small><b id="low">--</b></div>
+  <div class="metric"><small>24H VOLUME</small><b id="volume">--</b></div>
+  <div class="metric"><small>RSI (14)</small><b id="rsi">--</b></div>
+ </section>
+
+ <section class="panel">
+  <div class="row">
+   <h3>PRICE CHART</h3>
+   <span class="muted" id="chartSymbol">BTCUSDT</span>
+  </div>
+  <div class="tabs">
+   <button class="secondary tf" data-tf="1m">1m</button>
+   <button class="secondary tf" data-tf="5m">5m</button>
+   <button class="secondary tf" data-tf="15m">15m</button>
+   <button class="secondary tf" data-tf="1h">1H</button>
+   <button class="secondary tf" data-tf="4h">4H</button>
+   <button class="secondary tf" data-tf="1d">1D</button>
+  </div>
+  <div id="chart"></div>
+  <div class="status" id="chartStatus">Loading historical candles...</div>
+ </section>
+
+ <section class="panel">
+  <h3>QUANT STRATEGY BUILDER</h3>
+  <div class="controls">
+   <div><label>FAST EMA</label><input id="fast" type="number" value="9" min="2" max="100"></div>
+   <div><label>SLOW EMA</label><input id="slow" type="number" value="21" min="3" max="200"></div>
+   <div><label>STARTING CAPITAL (USDT)</label><input id="capital" type="number" value="1000" min="10"></div>
+   <div><label>FEE PER SIDE (%)</label><input id="fee" type="number" value="0.1" min="0" step="0.01"></div>
+  </div>
+  <p class="note">Strategy: Fast EMA ऊपर Slow EMA को cross करे तो BUY, नीचे cross करे तो EXIT. Spot long-only simulation.</p>
+  <button class="primary" style="width:100%;margin-top:8px" id="backtest">RUN BACKTEST</button>
+  <div class="status" id="testStatus">Historical data required before testing.</div>
+ </section>
+
+ <section class="panel">
+  <h3>BACKTEST PERFORMANCE</h3>
+  <div class="grid">
+   <div class="metric"><small>NET PROFIT</small><b id="profit">--</b></div>
+   <div class="metric"><small>WIN RATE</small><b id="winrate">--</b></div>
+   <div class="metric"><small>TOTAL TRADES</small><b id="trades">--</b></div>
+   <div class="metric"><small>MAX DRAWDOWN</small><b id="drawdown">--</b></div>
+   <div class="metric"><small>PROFIT FACTOR</small><b id="pf">--</b></div>
+   <div class="metric"><small>ENDING BALANCE</small><b id="balance">--</b></div>
+  </div>
+  <div style="margin-top:14px">
+   <h3>RECENT TRADES</h3>
+   <div style="overflow-x:auto">
+    <table>
+     <thead><tr><th>TYPE</th><th>ENTRY</th><th>EXIT</th><th>P/L</th></tr></thead>
+     <tbody id="tradeRows"><tr><td colspan="4" class="muted">Run a backtest to see results</td></tr></tbody>
+    </table>
+   </div>
+  </div>
+ </section>
+
+ <section class="panel">
+  <h3>HISTORICAL CANDLE REPLAY</h3>
+  <div class="row">
+   <span class="muted" id="replayCount">Replay not started</span>
+   <b id="replayPrice">--</b>
+  </div>
+  <input id="replaySlider" type="range" min="0" max="100" value="100" style="margin:16px 0">
+  <div class="actions">
+   <button class="secondary" id="replayBack">◀ STEP</button>
+   <button class="primary" id="replayPlay">PLAY</button>
+   <button class="secondary" id="replayNext">STEP ▶</button>
+   <button class="secondary" id="replayReset">RESET</button>
+  </div>
+  <p class="note">Replay loaded historical candles. This is a practice tool, not live order execution.</p>
+ </section>
+
+ <section class="panel">
+  <h3>RISK MANAGEMENT</h3>
+  <div class="controls">
+   <div><label>ENTRY PRICE</label><input id="entry" type="number" placeholder="Entry price"></div>
+   <div><label>STOP LOSS PRICE</label><input id="stop" type="number" placeholder="Stop loss"></div>
+   <div><label>TARGET PRICE</label><input id="target" type="number" placeholder="Target"></div>
+   <div><label>INVESTMENT (USDT)</label><input id="investment" type="number" value="100"></div>
+  </div>
+  <button class="primary" id="riskCalc" style="width:100%;margin-top:10px">CALCULATE RISK</button>
+  <div class="grid" style="margin-top:12px">
+   <div class="metric"><small>STOP LOSS</small><b id="riskLoss">--</b></div>
+   <div class="metric"><small>TARGET PROFIT</small><b id="riskGain">--</b></div>
+   <div class="metric"><small>RISK / REWARD</small><b id="riskReward">--</b></div>
+   <div class="metric"><small>POSITION SIZE</small><b id="position">--</b></div>
+  </div>
+ </section>
+ <footer>PRIYAL TRADING AI PRO · Research & Simulation Platform<br>Market data by Binance Public API</footer>
+</main>
+
+<script>
+const API="https://data-api.binance.vision/api/v3";
+let symbol="BTCUSDT", interval="15m", candles=[], chart, series, replayIndex=0, replayTimer=null;
+
+const $=id=>document.getElementById(id);
+const fmt=n=>Number(n).toLocaleString("en-US",{maximumFractionDigits:4});
+const money=n=>"$"+fmt(n);
+
+function setStatus(id,msg){$(id).textContent=msg}
+
+function initChart(){
+ if(!window.LightweightCharts){setStatus("chartStatus","Chart library could not load. Check internet.");return}
+ chart=LightweightCharts.createChart($("chart"),{
+  width:$("chart").clientWidth,height:$("chart").clientHeight,
+  layout:{background:{color:"#111a29"},textColor:"#9aabc2"},
+  grid:{vertLines:{color:"#1c2a3d"},horzLines:{color:"#1c2a3d"}},
+  rightPriceScale:{borderColor:"#253248"},
+  timeScale:{borderColor:"#253248",timeVisible:true,secondsVisible:false},
+  crosshair:{mode:0}
+ });
+ series=chart.addCandlestickSeries({
+  upColor:"#00d49a",downColor:"#ff5470",
+  borderUpColor:"#00d49a",borderDownColor:"#ff5470",
+  wickUpColor:"#00d49a",wickDownColor:"#ff5470"
+ });
+ new ResizeObserver(()=>chart.applyOptions({width:$("chart").clientWidth})).observe($("chart"));
+}
+
+async function loadMarket(){
+ symbol=$("symbol").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");
+ if(!symbol){alert("Enter a market symbol");return}
+ $("symbol").value=symbol;
+ $("coinName").textContent=symbol;
+ $("chartSymbol").textContent=symbol;
+ $("price").textContent="Loading...";
+ setStatus("connection","CONNECTING");
+ try{
+  const [ticker,stats,klines]=await Promise.all([
+   fetch(API+"/ticker/price?symbol="+symbol).then(r=>{if(!r.ok)throw Error("Invalid symbol");return r.json()}),
+   fetch(API+"/ticker/24hr?symbol="+symbol).then(r=>r.json()),
+   fetch(API+"/klines?symbol="+symbol+"&interval="+interval+"&limit=500").then(r=>{if(!r.ok)throw Error("Candle data unavailable");return r.json()})
+  ]);
+  $("price").textContent=money(ticker.price);
+  const pct=Number(stats.priceChangePercent);
+  $("change").textContent=(pct>=0?"+":"")+pct.toFixed(2)+"% · 24H";
+  $("change").className=pct>=0?"green":"red";
+  $("high").textContent=money(stats.highPrice);
+  $("low").textContent=money(stats.lowPrice);
+  $("volume").textContent=fmt(Number(stats.volume));
+  candles=klines.map(k=>({time:Math.floor(k[0]/1000),open:+k[1],high:+k[2],low:+k[3],close:+k[4],volume:+k[5]}));
+  if(series)series.setData(candles);
+  if(chart)chart.timeScale().fitContent();
+  $("replaySlider").max=Math.max(0,candles.length-1);
+  $("replaySlider").value=candles.length-1;
+  replayIndex=candles.length-1;
+  $("replayPrice").textContent=money(candles[replayIndex].close);
+  $("replayCount").textContent="Candle "+(replayIndex+1)+" / "+candles.length;
+  $("connection").textContent="CONNECTED";
+  $("connection").style.color="var(--green)";
+  setStatus("chartStatus","Historical candles loaded · "+interval+" · "+candles.length+" bars");
+  $("rsi").textContent=calcRSI(candles.map(c=>c.close),14).toFixed(1);
+ }catch(e){
+  $("connection").textContent="DATA ERROR";
+  $("price").textContent="Unavailable";
+  setStatus("chartStatus",e.message+". Check symbol and internet connection.");
+ }
+}
+
+function calcEMA(data,period){
+ let out=[],k=2/(period+1),ema=data[0];
+ data.forEach((v,i)=>{ema=i===0?v:v*k+ema*(1-k);out.push(ema)});
+ return out;
+}
+function calcRSI(data,p){
+ if(data.length<=p)return 50;
+ let gains=0,losses=0;
+ for(let i=data.length-p;i<data.length;i++){
+  let d=data[i]-data[i-1];
+  if(d>0)gains+=d;else losses-=d;
+ }
+ if(losses===0)return 100;
+ return 100-(100/(1+gains/losses));
+}
+
+function runBacktest(){
+ if(candles.length<50){alert("Load historical data first");return}
+ const fast=+$("fast").value,slow=+$("slow").value;
+ const capital=+$("capital").value,fee=+$("fee").value/100;
+ if(!fast||!slow||fast>=slow||capital<=0){alert("Fast EMA must be smaller than Slow EMA. Check capital.");return}
+ const closes=candles.map(c=>c.close);
+ const f=calcEMA(closes,fast),s=calcEMA(closes,slow);
+ let cash=capital,qty=0,entry=0,trades=[],peak=capital,maxDD=0;
+ let wins=0,grossWin=0,grossLoss=0;
+ for(let i=1;i<candles.length;i++){
+  const price=candles[i].open;
+  if(qty===0&&f[i-1]<=s[i-1]&&f[i]>s[i]){
+   qty=(cash*(1-fee))/price;
+   entry=price;
+   cash=0;
+  }else if(qty>0&&f[i-1]>=s[i-1]&&f[i]<s[i]){
+   const proceeds=qty*price*(1-fee);
+   const pnl=proceeds-entry*qty;
+   trades.push({entry,exit:price,pnl});
+   if(pnl>0){wins++;grossWin+=pnl}else grossLoss+=Math.abs(pnl);
+   cash=proceeds;qty=0;
+  }
+  const equity=cash+qty*candles[i].close;
+  peak=Math.max(peak,equity);
+  maxDD=Math.max(maxDD,(peak-equity)/peak*100);
+ }
+ if(qty>0){
+  const price=candles[candles.length-1].close;
+  const proceeds=qty*price*(1-fee);
+  const pnl=proceeds-entry*qty;
+  trades.push({entry,exit:price,pnl});
+  if(pnl>0){wins++;grossWin+=pnl}else grossLoss+=Math.abs(pnl);
+  cash=proceeds;
+ }
+ const net=cash-capital;
+ $("profit").textContent=money(net);
+ $("profit").className=net>=0?"green":"red";
+ $("winrate").textContent=(trades.length?wins/trades.length*100:0).toFixed(1)+"%";
+ $("trades").textContent=trades.length;
+ $("drawdown").textContent=maxDD.toFixed(2)+"%";
+ $("pf").textContent=grossLoss?(grossWin/grossLoss).toFixed(2):grossWin?"∞":"0";
+ $("balance").textContent=money(cash);
+ $("tradeRows").innerHTML=trades.slice(-12).reverse().map(t=>`<tr><td>LONG</td><td>${fmt(t.entry)}</td><td>${fmt(t.exit)}</td><td class="${t.pnl>=0?"green":"red"}">${money(t.pnl)}</td></tr>`).join("")||'<tr><td colspan="4">No trades generated</td></tr>';
+ setStatus("testStatus","Backtest completed · "+candles.length+" historical candles · Fees included");
+}
+
+function showReplay(){
+ if(!candles.length)return;
+ const c=candles[replayIndex];
+ series.setData(candles.slice(0,replayIndex+1));
+ $("replaySlider").value=replayIndex;
+ $("replayPrice").textContent=money(c.close);
+ $("replayCount").textContent="Candle "+(replayIndex+1)+" / "+candles.length;
+}
+function stopReplay(){if(replayTimer){clearInterval(replayTimer);replayTimer=null} $("replayPlay").textContent="PLAY"}
+
+$("load").onclick=loadMarket;
+$("symbol").addEventListener("keydown",e=>{if(e.key==="Enter")loadMarket()});
+document.querySelectorAll(".tf").forEach(b=>b.onclick=()=>{
+ interval=b.dataset.tf;
+ document.querySelectorAll(".tf").forEach(x=>x.style.background="#0a1220");
+ b.style.background="#087b66";
+ loadMarket();
+});
+$("backtest").onclick=runBacktest;
+$("replaySlider").oninput=e=>{stopReplay();replayIndex=+e.target.value;showReplay()};
+$("replayBack").onclick=()=>{stopReplay();replayIndex=Math.max(0,replayIndex-1);showReplay()};
+$("replayNext").onclick=()=>{stopReplay();replayIndex=Math.min(candles.length-1,replayIndex+1);showReplay()};
+$("replayReset").onclick=()=>{stopReplay();replayIndex=0;showReplay()};
+$("replayPlay").onclick=()=>{
+ if(replayTimer){stopReplay();return}
+ if(replayIndex>=candles.length-1)replayIndex=0;
+ $("replayPlay").textContent="PAUSE";
+ replayTimer=setInterval(()=>{
+  if(replayIndex>=candles.length-1){stopReplay();return}
+  replayIndex++;showReplay();
+ },350);
+};
+$("riskCalc").onclick=()=>{
+ const e=+$("entry").value,s=+$("stop").value,t=+$("target").value,inv=+$("investment").value;
+ if(!(e>0&&s>0&&t>0&&inv>0)||s>=e||t<=e){alert("For a LONG trade, enter valid prices: Stop < Entry < Target");return}
+ const qty=inv/e,loss=(e-s)*qty,gain=(t-e)*qty;
+ $("riskLoss").textContent=money(loss);
+ $("riskGain").textContent=money(gain);
+ $("riskReward").textContent="1 : "+(gain/loss).toFixed(2);
+ $("position").textContent=qty.toFixed(6);
+};
+initChart();
+loadMarket();
+</script>
+</body>
+</html>
