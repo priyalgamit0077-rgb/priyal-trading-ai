@@ -1,350 +1,321 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#080d17">
-<title>PRIYAL TRADING AI PRO</title>
-<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<title>PRIYAL TRADING PRO</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js"></script>
 <style>
-:root{--bg:#080d17;--panel:#111a29;--line:#253248;--text:#e8eef9;--muted:#8b9ab1;--green:#00d49a;--red:#ff5470;--blue:#5897ff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font:14px -apple-system,BlinkMacSystemFont,Arial,sans-serif}
-header{padding:19px 16px;background:#0d1523;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
-.brand{font-size:19px;font-weight:850;letter-spacing:.5px}
-.brand span{color:var(--green)}
-.sub{font-size:11px;color:var(--muted);margin-top:5px}
-.wrap{padding:14px;max-width:850px;margin:auto}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:13px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-label{display:block;color:var(--muted);font-size:11px;margin-bottom:7px}
-input,select,button{font:inherit;border-radius:9px;border:1px solid var(--line);background:#0a1220;color:var(--text);padding:12px}
-input,select{width:100%;min-width:0}
-button{cursor:pointer;font-weight:700}
-button.primary{background:#087b66;border-color:#087b66;color:white}
-button.secondary{background:#1b2b43}
-button:active{opacity:.75}
-.search{display:grid;grid-template-columns:1fr auto;gap:8px}
-.price{font-size:30px;font-weight:850;letter-spacing:-1px;margin:8px 0}
-.green{color:var(--green)}.red{color:var(--red)}
-.muted{color:var(--muted)}
-.tag{font-size:10px;padding:5px 8px;border-radius:20px;background:#15372f;color:var(--green)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.metric{padding:11px;background:#0b1422;border-radius:10px;border:1px solid #1c2b40}
-.metric b{display:block;font-size:17px;margin-top:6px}
-.metric small{color:var(--muted)}
-h3{font-size:15px;margin:0 0 13px}
-#chart{height:310px;width:100%}
-.tabs{display:flex;gap:7px;overflow:auto;margin:12px 0}
-.tabs button{white-space:nowrap;padding:9px 13px}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.actions button{flex:1}
-table{width:100%;border-collapse:collapse;font-size:12px}
-td,th{text-align:right;padding:10px 5px;border-bottom:1px solid var(--line)}
-td:first-child,th:first-child{text-align:left}
-.note{font-size:11px;line-height:1.6;color:var(--muted)}
-.status{font-size:11px;color:var(--muted);margin-top:9px}
-footer{text-align:center;padding:20px;color:var(--muted);font-size:11px}
-@media(min-width:650px){.grid{grid-template-columns:repeat(4,1fr)}#chart{height:420px}.controls{grid-template-columns:repeat(4,1fr)}}
+:root{--bg:#080d18;--panel:#101827;--panel2:#151f30;--line:#263449;--text:#e8eef8;--muted:#8b9ab0;--green:#00d395;--red:#ff5573;--blue:#4d9cff;--yellow:#ffc857}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px Arial,sans-serif}
+header{padding:15px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:19px;font-weight:800;letter-spacing:1px}.logo span{color:var(--green)}
+.status{font-size:12px;color:var(--muted)}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);margin-right:6px}
+main{max-width:1400px;margin:auto;padding:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input,select,button{background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:10px;border-radius:8px;font-size:13px}
+input{min-width:0}button{cursor:pointer}button.active{background:#174b43;border-color:var(--green)}
+button:hover{border-color:var(--blue)}.primary{background:#087c61;border-color:#087c61}
+.market{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+.metric small{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+.metric strong{font-size:18px}.positive{color:var(--green)}.negative{color:var(--red)}
+#chart{height:440px;width:100%}.subhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.section-title{font-weight:700;font-size:15px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat{background:var(--panel2);padding:12px;border-radius:9px}
+.stat small{display:block;color:var(--muted);margin-bottom:6px}
+.muted{color:var(--muted)}.notice{font-size:12px;color:var(--yellow);line-height:1.5}
+#searchResults{max-height:220px;overflow:auto;width:100%}
+.result{padding:10px;border-bottom:1px solid var(--line);cursor:pointer}.result:hover{background:var(--panel2)}
+table{width:100%;border-collapse:collapse;font-size:13px}td,th{text-align:left;padding:9px;border-bottom:1px solid var(--line)}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+@media(max-width:700px){main{padding:9px}.panel{padding:11px}#chart{height:360px}.grid{grid-template-columns:1fr}.metric strong{font-size:16px}header{padding:13px}}
 </style>
 </head>
 <body>
 <header>
- <div class="brand">PRIYAL <span>TRADING AI</span> PRO</div>
- <div class="sub">QUANT RESEARCH TERMINAL · VERSION 1.0</div>
+ <div class="logo">PRIYAL <span>TRADING PRO</span></div>
+ <div class="status"><span class="dot" id="statusDot"></span><span id="connection">डेटा कनेक्शन जाँच रहे हैं...</span></div>
 </header>
 
-<main class="wrap">
- <section class="panel">
-  <div class="row">
-   <b>MARKET TERMINAL</b>
-   <span class="tag" id="connection">CONNECTING</span>
-  </div>
-  <div class="search" style="margin-top:13px">
-   <input id="symbol" value="BTCUSDT" placeholder="Search: BTCUSDT, ETHUSDT">
-   <button class="primary" id="load">SEARCH</button>
-  </div>
-  <div class="row" style="margin-top:15px">
-   <div>
-    <div class="muted" id="coinName">BITCOIN / USDT</div>
-    <div class="price" id="price">Loading...</div>
-    <div id="change" class="muted">Fetching market data</div>
-   </div>
-   <div style="text-align:right">
-    <div class="muted">LIVE MARKET</div>
-    <b class="green">● ONLINE</b>
-   </div>
-  </div>
- </section>
+<main>
+<section class="panel">
+ <div class="toolbar">
+  <input id="symbolInput" value="BTCUSDT" placeholder="Coin symbol जैसे BTCUSDT" style="width:180px">
+  <button class="primary" id="loadBtn">लोड करें</button>
+  <button id="searchBtn">कॉइन खोजें</button>
+ </div>
+ <div id="searchResults"></div>
+ <div class="market">
+  <div class="metric"><small>लाइव प्राइस (USDT)</small><strong id="price">लोड हो रहा है...</strong></div>
+  <div class="metric"><small>24H बदलाव</small><strong id="change">--</strong></div>
+  <div class="metric"><small>24H हाई</small><strong id="high">--</strong></div>
+  <div class="metric"><small>24H लो</small><strong id="low">--</strong></div>
+  <div class="metric"><small>24H वॉल्यूम</small><strong id="volume">--</strong></div>
+ </div>
+ <p class="notice" id="sourceNote">स्रोत: Binance Spot Market API. कीमत USDT में है।</p>
+</section>
 
- <section class="grid" style="margin-bottom:13px">
-  <div class="metric"><small>24H HIGH</small><b id="high">--</b></div>
-  <div class="metric"><small>24H LOW</small><b id="low">--</b></div>
-  <div class="metric"><small>24H VOLUME</small><b id="volume">--</b></div>
-  <div class="metric"><small>RSI (14)</small><b id="rsi">--</b></div>
- </section>
+<section class="panel">
+ <div class="subhead">
+  <div class="section-title" id="chartTitle">BTCUSDT चार्ट</div>
+  <div class="toolbar" id="intervals">
+   <button data-i="1m">1m</button><button data-i="5m">5m</button>
+   <button data-i="15m" class="active">15m</button><button data-i="1h">1H</button>
+   <button data-i="4h">4H</button><button data-i="1d">1D</button><button data-i="1w">1W</button>
+  </div>
+ </div>
+ <div id="chart"></div>
+ <div class="toolbar" style="margin-top:12px">
+  <button id="ema20Btn" class="active">EMA 20</button>
+  <button id="ema50Btn" class="active">EMA 50</button>
+  <button id="srBtn" class="active">Support / Resistance</button>
+  <button id="refreshBtn">रिफ्रेश</button>
+ </div>
+ <p class="muted" style="font-size:11px">चार्ट Binance की कैंडल पर आधारित है। आखिरी कैंडल लाइव रहते हुए बदल सकती है।</p>
+</section>
 
+<div class="grid">
  <section class="panel">
-  <div class="row">
-   <h3>PRICE CHART</h3>
-   <span class="muted" id="chartSymbol">BTCUSDT</span>
-  </div>
-  <div class="tabs">
-   <button class="secondary tf" data-tf="1m">1m</button>
-   <button class="secondary tf" data-tf="5m">5m</button>
-   <button class="secondary tf" data-tf="15m">15m</button>
-   <button class="secondary tf" data-tf="1h">1H</button>
-   <button class="secondary tf" data-tf="4h">4H</button>
-   <button class="secondary tf" data-tf="1d">1D</button>
-  </div>
-  <div id="chart"></div>
-  <div class="status" id="chartStatus">Loading historical candles...</div>
- </section>
-
- <section class="panel">
-  <h3>QUANT STRATEGY BUILDER</h3>
-  <div class="controls">
-   <div><label>FAST EMA</label><input id="fast" type="number" value="9" min="2" max="100"></div>
-   <div><label>SLOW EMA</label><input id="slow" type="number" value="21" min="3" max="200"></div>
-   <div><label>STARTING CAPITAL (USDT)</label><input id="capital" type="number" value="1000" min="10"></div>
-   <div><label>FEE PER SIDE (%)</label><input id="fee" type="number" value="0.1" min="0" step="0.01"></div>
-  </div>
-  <p class="note">Strategy: Fast EMA ऊपर Slow EMA को cross करे तो BUY, नीचे cross करे तो EXIT. Spot long-only simulation.</p>
-  <button class="primary" style="width:100%;margin-top:8px" id="backtest">RUN BACKTEST</button>
-  <div class="status" id="testStatus">Historical data required before testing.</div>
- </section>
-
- <section class="panel">
-  <h3>BACKTEST PERFORMANCE</h3>
-  <div class="grid">
-   <div class="metric"><small>NET PROFIT</small><b id="profit">--</b></div>
-   <div class="metric"><small>WIN RATE</small><b id="winrate">--</b></div>
-   <div class="metric"><small>TOTAL TRADES</small><b id="trades">--</b></div>
-   <div class="metric"><small>MAX DRAWDOWN</small><b id="drawdown">--</b></div>
-   <div class="metric"><small>PROFIT FACTOR</small><b id="pf">--</b></div>
-   <div class="metric"><small>ENDING BALANCE</small><b id="balance">--</b></div>
-  </div>
-  <div style="margin-top:14px">
-   <h3>RECENT TRADES</h3>
-   <div style="overflow-x:auto">
-    <table>
-     <thead><tr><th>TYPE</th><th>ENTRY</th><th>EXIT</th><th>P/L</th></tr></thead>
-     <tbody id="tradeRows"><tr><td colspan="4" class="muted">Run a backtest to see results</td></tr></tbody>
-    </table>
-   </div>
-  </div>
- </section>
-
- <section class="panel">
-  <h3>HISTORICAL CANDLE REPLAY</h3>
-  <div class="row">
-   <span class="muted" id="replayCount">Replay not started</span>
-   <b id="replayPrice">--</b>
-  </div>
-  <input id="replaySlider" type="range" min="0" max="100" value="100" style="margin:16px 0">
-  <div class="actions">
-   <button class="secondary" id="replayBack">◀ STEP</button>
-   <button class="primary" id="replayPlay">PLAY</button>
-   <button class="secondary" id="replayNext">STEP ▶</button>
-   <button class="secondary" id="replayReset">RESET</button>
-  </div>
-  <p class="note">Replay loaded historical candles. This is a practice tool, not live order execution.</p>
- </section>
-
- <section class="panel">
-  <h3>RISK MANAGEMENT</h3>
-  <div class="controls">
-   <div><label>ENTRY PRICE</label><input id="entry" type="number" placeholder="Entry price"></div>
-   <div><label>STOP LOSS PRICE</label><input id="stop" type="number" placeholder="Stop loss"></div>
-   <div><label>TARGET PRICE</label><input id="target" type="number" placeholder="Target"></div>
-   <div><label>INVESTMENT (USDT)</label><input id="investment" type="number" value="100"></div>
-  </div>
-  <button class="primary" id="riskCalc" style="width:100%;margin-top:10px">CALCULATE RISK</button>
+  <div class="section-title">Technical Analysis</div>
   <div class="grid" style="margin-top:12px">
-   <div class="metric"><small>STOP LOSS</small><b id="riskLoss">--</b></div>
-   <div class="metric"><small>TARGET PROFIT</small><b id="riskGain">--</b></div>
-   <div class="metric"><small>RISK / REWARD</small><b id="riskReward">--</b></div>
-   <div class="metric"><small>POSITION SIZE</small><b id="position">--</b></div>
+   <div class="stat"><small>RSI (14)</small><strong id="rsi">--</strong></div>
+   <div class="stat"><small>EMA 20</small><strong id="ema20">--</strong></div>
+   <div class="stat"><small>EMA 50</small><strong id="ema50">--</strong></div>
+   <div class="stat"><small>MACD (12,26,9)</small><strong id="macd">--</strong></div>
+   <div class="stat"><small>Trend (EMA 20/50)</small><strong id="trend">--</strong></div>
+   <div class="stat"><small>डेटा कैंडल</small><strong id="candleCount">--</strong></div>
   </div>
+  <p class="notice">इंडिकेटर ऐतिहासिक कैंडल से गणना किए जाते हैं। ये खरीदने या बेचने की गारंटी नहीं हैं।</p>
  </section>
- <footer>PRIYAL TRADING AI PRO · Research & Simulation Platform<br>Market data by Binance Public API</footer>
+
+ <section class="panel">
+  <div class="section-title">Auto Support / Resistance</div>
+  <p class="muted" style="font-size:12px">चुने हुए टाइमफ्रेम के हाल के कैंडल से Pivot Levels निकाले जाते हैं।</p>
+  <table><thead><tr><th>लेवल</th><th>प्राइस</th><th>दूरी</th></tr></thead><tbody id="levels">
+   <tr><td colspan="3">डेटा लोड हो रहा है...</td></tr>
+  </tbody></table>
+  <p class="notice">ये गणितीय Pivot Levels हैं, किसी एक्सचेंज द्वारा घोषित स्तर नहीं।</p>
+ </section>
+</div>
+
+<section class="panel">
+ <div class="section-title">Paper Trading (Virtual)</div>
+ <p class="muted" style="font-size:12px">यह केवल सिमुलेशन है। कोई असली ऑर्डर या पैसा इस्तेमाल नहीं होगा।</p>
+ <div class="toolbar" style="margin:12px 0">
+  <label>मात्रा <input id="quantity" type="number" min="0.000001" step="any" value="0.001" style="width:110px"></label>
+  <button class="primary" id="buyBtn">Virtual Buy</button>
+  <button id="sellBtn">Virtual Sell</button>
+ </div>
+ <div class="market">
+  <div class="metric"><small>वर्चुअल बैलेंस</small><strong id="balance">10,000 USDT</strong></div>
+  <div class="metric"><small>होल्डिंग</small><strong id="holding">0</strong></div>
+  <div class="metric"><small>अनुमानित P/L</small><strong id="pnl">0 USDT</strong></div>
+ </div>
+ <p class="notice" id="tradeMessage">शुरुआती वर्चुअल बैलेंस: 10,000 USDT. ट्रेड स्थानीय ब्राउज़र में सेव होते हैं।</p>
+ <button id="resetPaper">Paper Trading रीसेट</button>
+</section>
+
+<footer>PRIYAL TRADING PRO · Market data: Binance · Educational tool, not financial advice.</footer>
 </main>
 
 <script>
-const API="https://data-api.binance.vision/api/v3";
-let symbol="BTCUSDT", interval="15m", candles=[], chart, series, replayIndex=0, replayTimer=null;
-
+const API="https://api.binance.com";
+let symbol="BTCUSDT", interval="15m", candles=[], socket=null, chart=null;
+let candleSeries=null, ema20Series=null, ema50Series=null;
+let ema20On=true, ema50On=true, srOn=true, priceLines=[];
+let currentPrice=0, lastSocketTime=0;
 const $=id=>document.getElementById(id);
-const fmt=n=>Number(n).toLocaleString("en-US",{maximumFractionDigits:4});
-const money=n=>"$"+fmt(n);
-
-function setStatus(id,msg){$(id).textContent=msg}
+const fmt=(n,d=4)=>Number(n).toLocaleString("en-US",{maximumFractionDigits:d});
+const setStatus=(msg,ok=false)=>{$("connection").textContent=msg;$("statusDot").style.background=ok?"#00d395":"#ffc857"};
 
 function initChart(){
- if(!window.LightweightCharts){setStatus("chartStatus","Chart library could not load. Check internet.");return}
- chart=LightweightCharts.createChart($("chart"),{
-  width:$("chart").clientWidth,height:$("chart").clientHeight,
-  layout:{background:{color:"#111a29"},textColor:"#9aabc2"},
-  grid:{vertLines:{color:"#1c2a3d"},horzLines:{color:"#1c2a3d"}},
-  rightPriceScale:{borderColor:"#253248"},
-  timeScale:{borderColor:"#253248",timeVisible:true,secondsVisible:false},
-  crosshair:{mode:0}
+ const el=$("chart");
+ chart=LightweightCharts.createChart(el,{
+  width:el.clientWidth,height:el.clientHeight,
+  layout:{background:{color:"#101827"},textColor:"#aab8cc"},
+  grid:{vertLines:{color:"#1d2a3c"},horzLines:{color:"#1d2a3c"}},
+  rightPriceScale:{borderColor:"#263449"},
+  timeScale:{borderColor:"#263449",timeVisible:true,secondsVisible:false},
+  crosshair:{mode:1}
  });
- series=chart.addCandlestickSeries({
-  upColor:"#00d49a",downColor:"#ff5470",
-  borderUpColor:"#00d49a",borderDownColor:"#ff5470",
-  wickUpColor:"#00d49a",wickDownColor:"#ff5470"
+ candleSeries=chart.addCandlestickSeries({
+  upColor:"#00d395",downColor:"#ff5573",
+  borderUpColor:"#00d395",borderDownColor:"#ff5573",
+  wickUpColor:"#00d395",wickDownColor:"#ff5573"
  });
- new ResizeObserver(()=>chart.applyOptions({width:$("chart").clientWidth})).observe($("chart"));
+ ema20Series=chart.addLineSeries({color:"#ffc857",lineWidth:2,priceLineVisible:false,lastValueVisible:false});
+ ema50Series=chart.addLineSeries({color:"#4d9cff",lineWidth:2,priceLineVisible:false,lastValueVisible:false});
+ new ResizeObserver(()=>chart.applyOptions({width:el.clientWidth,height:el.clientHeight})).observe(el);
 }
-
+function cleanSocket(){
+ if(socket){socket.onclose=null;socket.close();socket=null;}
+}
+async function fetchJSON(url){
+ const r=await fetch(url);
+ if(!r.ok)throw new Error("Binance API error: "+r.status);
+ return r.json();
+}
 async function loadMarket(){
- symbol=$("symbol").value.trim().toUpperCase().replace(/[^A-Z0-9]/g,"");
- if(!symbol){alert("Enter a market symbol");return}
- $("symbol").value=symbol;
- $("coinName").textContent=symbol;
- $("chartSymbol").textContent=symbol;
- $("price").textContent="Loading...";
- setStatus("connection","CONNECTING");
+ cleanSocket();lastSocketTime=0;
+ setStatus("Binance से डेटा लोड हो रहा है...");
+ $("chartTitle").textContent=symbol+" · "+interval;
  try{
-  const [ticker,stats,klines]=await Promise.all([
-   fetch(API+"/ticker/price?symbol="+symbol).then(r=>{if(!r.ok)throw Error("Invalid symbol");return r.json()}),
-   fetch(API+"/ticker/24hr?symbol="+symbol).then(r=>r.json()),
-   fetch(API+"/klines?symbol="+symbol+"&interval="+interval+"&limit=500").then(r=>{if(!r.ok)throw Error("Candle data unavailable");return r.json()})
+  const [klines,ticker]=await Promise.all([
+   fetchJSON(`${API}/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=500`),
+   fetchJSON(`${API}/api/v3/ticker/24hr?symbol=${symbol}`)
   ]);
-  $("price").textContent=money(ticker.price);
-  const pct=Number(stats.priceChangePercent);
-  $("change").textContent=(pct>=0?"+":"")+pct.toFixed(2)+"% · 24H";
-  $("change").className=pct>=0?"green":"red";
-  $("high").textContent=money(stats.highPrice);
-  $("low").textContent=money(stats.lowPrice);
-  $("volume").textContent=fmt(Number(stats.volume));
   candles=klines.map(k=>({time:Math.floor(k[0]/1000),open:+k[1],high:+k[2],low:+k[3],close:+k[4],volume:+k[5]}));
-  if(series)series.setData(candles);
-  if(chart)chart.timeScale().fitContent();
-  $("replaySlider").max=Math.max(0,candles.length-1);
-  $("replaySlider").value=candles.length-1;
-  replayIndex=candles.length-1;
-  $("replayPrice").textContent=money(candles[replayIndex].close);
-  $("replayCount").textContent="Candle "+(replayIndex+1)+" / "+candles.length;
-  $("connection").textContent="CONNECTED";
-  $("connection").style.color="var(--green)";
-  setStatus("chartStatus","Historical candles loaded · "+interval+" · "+candles.length+" bars");
-  $("rsi").textContent=calcRSI(candles.map(c=>c.close),14).toFixed(1);
+  candleSeries.setData(candles);
+  currentPrice=+ticker.lastPrice;
+  $("price").textContent=fmt(currentPrice,8);
+  $("change").textContent=fmt(+ticker.priceChangePercent,2)+"%";
+  $("change").className=+ticker.priceChangePercent>=0?"positive":"negative";
+  $("high").textContent=fmt(+ticker.highPrice,8);
+  $("low").textContent=fmt(+ticker.lowPrice,8);
+  $("volume").textContent=fmt(+ticker.volume,2)+" "+symbol.replace("USDT","");
+  $("candleCount").textContent=candles.length;
+  $("sourceNote").textContent="स्रोत: Binance Spot API · अपडेट: "+new Date().toLocaleTimeString();
+  calculateIndicators();drawLevels();startSocket();
+  setStatus("Binance WebSocket Live",true);
  }catch(e){
-  $("connection").textContent="DATA ERROR";
-  $("price").textContent="Unavailable";
-  setStatus("chartStatus",e.message+". Check symbol and internet connection.");
+  setStatus("डेटा कनेक्शन उपलब्ध नहीं");
+  $("sourceNote").textContent="डेटा नहीं मिला: "+e.message+". पुरानी कीमत को Live न मानें।";
+  console.error(e);
  }
 }
-
-function calcEMA(data,period){
- let out=[],k=2/(period+1),ema=data[0];
- data.forEach((v,i)=>{ema=i===0?v:v*k+ema*(1-k);out.push(ema)});
+function startSocket(){
+ const stream=symbol.toLowerCase()+"@kline_"+interval;
+ socket=new WebSocket("wss://stream.binance.com:9443/ws/"+stream);
+ socket.onopen=()=>setStatus("Binance WebSocket Live",true);
+ socket.onmessage=e=>{
+  const msg=JSON.parse(e.data),k=msg.k;
+  if(!k)return;
+  const c={time:Math.floor(k.t/1000),open:+k.o,high:+k.h,low:+k.l,close:+k.c,volume:+k.v};
+  currentPrice=c.close;
+  const last=candles[candles.length-1];
+  if(last&&last.time===c.time)candles[candles.length-1]=c;
+  else if(!last||c.time>last.time)candles.push(c);
+  if(candles.length>500)candles.shift();
+  candleSeries.update(c);
+  $("price").textContent=fmt(currentPrice,8);
+  $("sourceNote").textContent="स्रोत: Binance WebSocket · आखिरी अपडेट: "+new Date().toLocaleTimeString();
+  calculateIndicators();drawLevels();
+ };
+ socket.onerror=()=>setStatus("WebSocket में समस्या");
+ socket.onclose=()=>{
+  if(socket)setStatus("WebSocket डिस्कनेक्ट, रिफ्रेश करें");
+ };
+}
+function ema(values,period){
+ let out=[],k=2/(period+1),prev=null;
+ values.forEach((v,i)=>{prev=prev===null?v:v*k+prev*(1-k);out.push({time:candles[i].time,value:prev});});
  return out;
 }
-function calcRSI(data,p){
- if(data.length<=p)return 50;
+function rsi(values,period=14){
+ if(values.length<=period)return null;
  let gains=0,losses=0;
- for(let i=data.length-p;i<data.length;i++){
-  let d=data[i]-data[i-1];
-  if(d>0)gains+=d;else losses-=d;
+ for(let i=1;i<=period;i++){let d=values[i]-values[i-1];if(d>0)gains+=d;else losses-=d;}
+ let avgG=gains/period,avgL=losses/period;
+ for(let i=period+1;i<values.length;i++){
+  let d=values[i]-values[i-1];avgG=(avgG*(period-1)+Math.max(d,0))/period;
+  avgL=(avgL*(period-1)+Math.max(-d,0))/period;
  }
- if(losses===0)return 100;
- return 100-(100/(1+gains/losses));
+ return avgL===0?100:100-(100/(1+avgG/avgL));
 }
-
-function runBacktest(){
- if(candles.length<50){alert("Load historical data first");return}
- const fast=+$("fast").value,slow=+$("slow").value;
- const capital=+$("capital").value,fee=+$("fee").value/100;
- if(!fast||!slow||fast>=slow||capital<=0){alert("Fast EMA must be smaller than Slow EMA. Check capital.");return}
+function calculateIndicators(){
+ if(candles.length<30)return;
  const closes=candles.map(c=>c.close);
- const f=calcEMA(closes,fast),s=calcEMA(closes,slow);
- let cash=capital,qty=0,entry=0,trades=[],peak=capital,maxDD=0;
- let wins=0,grossWin=0,grossLoss=0;
- for(let i=1;i<candles.length;i++){
-  const price=candles[i].open;
-  if(qty===0&&f[i-1]<=s[i-1]&&f[i]>s[i]){
-   qty=(cash*(1-fee))/price;
-   entry=price;
-   cash=0;
-  }else if(qty>0&&f[i-1]>=s[i-1]&&f[i]<s[i]){
-   const proceeds=qty*price*(1-fee);
-   const pnl=proceeds-entry*qty;
-   trades.push({entry,exit:price,pnl});
-   if(pnl>0){wins++;grossWin+=pnl}else grossLoss+=Math.abs(pnl);
-   cash=proceeds;qty=0;
-  }
-  const equity=cash+qty*candles[i].close;
-  peak=Math.max(peak,equity);
-  maxDD=Math.max(maxDD,(peak-equity)/peak*100);
- }
- if(qty>0){
-  const price=candles[candles.length-1].close;
-  const proceeds=qty*price*(1-fee);
-  const pnl=proceeds-entry*qty;
-  trades.push({entry,exit:price,pnl});
-  if(pnl>0){wins++;grossWin+=pnl}else grossLoss+=Math.abs(pnl);
-  cash=proceeds;
- }
- const net=cash-capital;
- $("profit").textContent=money(net);
- $("profit").className=net>=0?"green":"red";
- $("winrate").textContent=(trades.length?wins/trades.length*100:0).toFixed(1)+"%";
- $("trades").textContent=trades.length;
- $("drawdown").textContent=maxDD.toFixed(2)+"%";
- $("pf").textContent=grossLoss?(grossWin/grossLoss).toFixed(2):grossWin?"∞":"0";
- $("balance").textContent=money(cash);
- $("tradeRows").innerHTML=trades.slice(-12).reverse().map(t=>`<tr><td>LONG</td><td>${fmt(t.entry)}</td><td>${fmt(t.exit)}</td><td class="${t.pnl>=0?"green":"red"}">${money(t.pnl)}</td></tr>`).join("")||'<tr><td colspan="4">No trades generated</td></tr>';
- setStatus("testStatus","Backtest completed · "+candles.length+" historical candles · Fees included");
+ const e20=ema(closes,20),e50=ema(closes,50);
+ ema20Series.setData(ema20On?e20:[]);
+ ema50Series.setData(ema50On?e50:[]);
+ const a=e20[e20.length-1].value,b=e50[e50.length-1].value;
+ $("ema20").textContent=fmt(a,6);$("ema50").textContent=fmt(b,6);
+ const rv=rsi(closes);
+ $("rsi").textContent=rv===null?"--":fmt(rv,2)+(rv>70?" · Overbought":rv<30?" · Oversold":"");
+ $("trend").textContent=a>b?"Bullish":a<b?"Bearish":"Neutral";
+ $("trend").className=a>b?"positive":a<b?"negative":"";
+ const m12=ema(closes,12),m26=ema(closes,26);
+ const macd=m12[m12.length-1].value-m26[m26.length-1].value;
+ $("macd").textContent=fmt(macd,6);
 }
-
-function showReplay(){
+function drawLevels(){
  if(!candles.length)return;
- const c=candles[replayIndex];
- series.setData(candles.slice(0,replayIndex+1));
- $("replaySlider").value=replayIndex;
- $("replayPrice").textContent=money(c.close);
- $("replayCount").textContent="Candle "+(replayIndex+1)+" / "+candles.length;
+ priceLines.forEach(p=>candleSeries.removePriceLine(p));priceLines=[];
+ if(!srOn)return;
+ const data=candles.slice(-150),highs=[],lows=[];
+ for(let i=2;i<data.length-2;i++){
+  let h=true,l=true;
+  for(let j=1;j<=2;j++){if(data[i].high<=data[i-j].high||data[i].high<=data[i+j].high)h=false;if(data[i].low>=data[i-j].low||data[i].low>=data[i+j].low)l=false;}
+  if(h)highs.push(data[i].high);if(l)lows.push(data[i].low);
+ }
+ const supports=lows.filter(x=>x<currentPrice).sort((a,b)=>b-a).slice(0,3);
+ const resistances=highs.filter(x=>x>currentPrice).sort((a,b)=>a-b).slice(0,3);
+ const levels=[...supports.map(x=>({name:"Support",price:x,color:"#00d395"})),...resistances.map(x=>({name:"Resistance",price:x,color:"#ff5573"}))];
+ $("levels").innerHTML=levels.length?levels.map(x=>`<tr><td>${x.name}</td><td>${fmt(x.price,8)}</td><td>${fmt((x.price-currentPrice)/currentPrice*100,2)}%</td></tr>`).join(""):'<tr><td colspan="3">आसपास कोई Pivot Level नहीं मिला</td></tr>';
+ levels.forEach(x=>priceLines.push(candleSeries.createPriceLine({price:x.price,color:x.color,lineWidth:1,lineStyle:2,axisLabelVisible:true,title:x.name})));
 }
-function stopReplay(){if(replayTimer){clearInterval(replayTimer);replayTimer=null} $("replayPlay").textContent="PLAY"}
-
-$("load").onclick=loadMarket;
-$("symbol").addEventListener("keydown",e=>{if(e.key==="Enter")loadMarket()});
-document.querySelectorAll(".tf").forEach(b=>b.onclick=()=>{
- interval=b.dataset.tf;
- document.querySelectorAll(".tf").forEach(x=>x.style.background="#0a1220");
- b.style.background="#087b66";
+async function searchCoins(){
+ $("searchResults").innerHTML="कॉइन खोज रहे हैं...";
+ try{
+  const info=await fetchJSON(API+"/api/v3/exchangeInfo");
+  const q=$("symbolInput").value.trim().toUpperCase();
+  const matches=info.symbols.filter(s=>s.status==="TRADING"&&s.quoteAsset==="USDT"&&s.symbol.includes(q)).slice(0,25);
+  $("searchResults").innerHTML=matches.map(s=>`<div class="result" data-symbol="${s.symbol}">${s.symbol} <span class="muted">· Binance Spot</span></div>`).join("")||"कोई कॉइन नहीं मिला";
+  document.querySelectorAll(".result").forEach(el=>el.onclick=()=>{$("symbolInput").value=el.dataset.symbol;$("searchResults").innerHTML="";changeSymbol();});
+ }catch(e){$("searchResults").textContent="कॉइन खोजने में समस्या: "+e.message;}
+}
+function changeSymbol(){
+ const s=$("symbolInput").value.trim().toUpperCase();
+ if(!/^[A-Z0-9]{5,20}$/.test(s)){alert("सही Binance symbol डालें, जैसे BTCUSDT");return;}
+ symbol=s;loadMarket();
+}
+$("loadBtn").onclick=changeSymbol;
+$("searchBtn").onclick=searchCoins;
+$("refreshBtn").onclick=loadMarket;
+$("intervals").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+ interval=b.dataset.i;
+ $("intervals").querySelectorAll("button").forEach(x=>x.classList.toggle("active",x===b));
  loadMarket();
 });
-$("backtest").onclick=runBacktest;
-$("replaySlider").oninput=e=>{stopReplay();replayIndex=+e.target.value;showReplay()};
-$("replayBack").onclick=()=>{stopReplay();replayIndex=Math.max(0,replayIndex-1);showReplay()};
-$("replayNext").onclick=()=>{stopReplay();replayIndex=Math.min(candles.length-1,replayIndex+1);showReplay()};
-$("replayReset").onclick=()=>{stopReplay();replayIndex=0;showReplay()};
-$("replayPlay").onclick=()=>{
- if(replayTimer){stopReplay();return}
- if(replayIndex>=candles.length-1)replayIndex=0;
- $("replayPlay").textContent="PAUSE";
- replayTimer=setInterval(()=>{
-  if(replayIndex>=candles.length-1){stopReplay();return}
-  replayIndex++;showReplay();
- },350);
+$("ema20Btn").onclick=()=>{ema20On=!ema20On;$("ema20Btn").classList.toggle("active",ema20On);calculateIndicators();};
+$("ema50Btn").onclick=()=>{ema50On=!ema50On;$("ema50Btn").classList.toggle("active",ema50On);calculateIndicators();};
+$("srBtn").onclick=()=>{srOn=!srOn;$("srBtn").classList.toggle("active",srOn);drawLevels();};
+
+let paper=JSON.parse(localStorage.getItem("priyalPaper")||'{"balance":10000,"qty":0,"cost":0}');
+function savePaper(){localStorage.setItem("priyalPaper",JSON.stringify(paper));updatePaper();}
+function updatePaper(){
+ $("balance").textContent=fmt(paper.balance,2)+" USDT";
+ $("holding").textContent=fmt(paper.qty,8)+" "+symbol.replace("USDT","");
+ const pl=paper.qty*currentPrice-paper.cost;
+ $("pnl").textContent=fmt(pl,2)+" USDT";
+ $("pnl").className=pl>=0?"positive":"negative";
+}
+$("buyBtn").onclick=()=>{
+ const q=+$("quantity").value,cost=q*currentPrice;
+ if(!currentPrice||!q||q<=0)return alert("पहले लाइव प्राइस और सही मात्रा आने दें");
+ if(cost>paper.balance)return alert("वर्चुअल बैलेंस पर्याप्त नहीं है");
+ paper.balance-=cost;paper.qty+=q;paper.cost+=cost;savePaper();
+ $("tradeMessage").textContent="Virtual Buy पूरा हुआ · "+fmt(q,8)+" "+symbol;
 };
-$("riskCalc").onclick=()=>{
- const e=+$("entry").value,s=+$("stop").value,t=+$("target").value,inv=+$("investment").value;
- if(!(e>0&&s>0&&t>0&&inv>0)||s>=e||t<=e){alert("For a LONG trade, enter valid prices: Stop < Entry < Target");return}
- const qty=inv/e,loss=(e-s)*qty,gain=(t-e)*qty;
- $("riskLoss").textContent=money(loss);
- $("riskGain").textContent=money(gain);
- $("riskReward").textContent="1 : "+(gain/loss).toFixed(2);
- $("position").textContent=qty.toFixed(6);
+$("sellBtn").onclick=()=>{
+ const q=+$("quantity").value;
+ if(!currentPrice||!q||q<=0||q>paper.qty)return alert("होल्डिंग पर्याप्त नहीं है या मात्रा गलत है");
+ const avg=paper.cost/paper.qty,proceeds=q*currentPrice;
+ paper.balance+=proceeds;paper.qty-=q;paper.cost-=q*avg;
+ if(paper.qty<1e-10){paper.qty=0;paper.cost=0;}
+ savePaper();$("tradeMessage").textContent="Virtual Sell पूरा हुआ · "+fmt(q,8)+" "+symbol;
 };
-initChart();
-loadMarket();
+$("resetPaper").onclick=()=>{
+ if(confirm("Paper Trading का बैलेंस और होल्डिंग रीसेट करें?")){
+  paper={balance:10000,qty:0,cost:0};savePaper();
+  $("tradeMessage").textContent="Paper Trading रीसेट हो गई।";
+ }
+};
+initChart();loadMarket();updatePaper();
 </script>
 </body>
 </html>
